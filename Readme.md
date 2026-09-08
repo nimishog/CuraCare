@@ -1,0 +1,1 @@
+This is Curacure, a complete solution for Patient intake at OPDs
