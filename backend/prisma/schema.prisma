@@ -1,5 +1,3 @@
-// schema.prisma
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
@@ -10,43 +8,87 @@ datasource db {
   extensions = [vector]
 }
 
+enum Role {
+  DOCTOR
+  PATIENT
+}
+
+enum SessionStatus {
+  PENDING
+  ESCALATED
+  VERIFIED
+}
+
+model User {
+  id            String          @id @default(uuid())
+  firebaseUid   String          @unique
+  loginId       String          @unique // D_100001 / P_100001
+  role          Role
+  isActive      Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  doctorProfile DoctorProfile?
+  patientProfile PatientProfile?
+
+  @@index([firebaseUid])
+  @@index([loginId])
+}
+
+model DoctorProfile {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  D_ID           String   @unique
+  fullName       String
+  email          String
+  specialization String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  hospitals      DoctorHospital[]
+  records        MedicalRecord[]
+  sessions       IntakeSession[]
+}
+
+model PatientProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  P_ID        String   @unique
+  fullName    String
+  email       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  records     MedicalRecord[]
+  sessions    IntakeSession[]
+}
+
 model Hospital {
   id        String   @id @default(uuid())
   name      String
   address   String
   city      String
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  // Many-to-Many: A hospital has many doctors
-  doctors   Doctor[] 
-  
-  // One-to-Many: A hospital stores many medical records
+  doctors   DoctorHospital[]
   records   MedicalRecord[]
+  sessions  IntakeSession[]
 }
 
-model Doctor {
-  id          String   @id @default(uuid())
-  firebaseUid String   @unique
-  name        String
-  specialty   String
-  
-  // Many-to-Many: A doctor works at many hospitals
-  hospitals   Hospital[] 
-  
-  // One-to-Many: A doctor creates many medical records
-  records     MedicalRecord[]
-}
+model DoctorHospital {
+  id        String   @id @default(uuid())
+  doctorId  String
+  doctor    DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  hospitalId String
+  hospital  Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 
-model Patient {
-  id          String   @id @default(uuid())
-  firebaseUid String   @unique
-  name        String
-  dateOfBirth DateTime
-  bloodType   String?
-  
-  // One-to-Many: A patient has many medical records 
-  // (This acts as the bridge connecting them to many doctors and many hospitals)
-  records     MedicalRecord[]
+  @@unique([doctorId, hospitalId])
+  @@index([doctorId])
+  @@index([hospitalId])
 }
 
 model MedicalRecord {
@@ -54,13 +96,65 @@ model MedicalRecord {
   diagnosis    String
   duration     Int
   createdAt    DateTime @default(now())
-  // The Junction Links
+  updatedAt    DateTime @updatedAt
+
   patientId    String
-  patient      Patient  @relation(fields: [patientId], references: [id])
+  patient      PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   doctorId     String
-  doctor       Doctor   @relation(fields: [doctorId], references: [id])
+  doctor       DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
 
   hospitalId   String
-  hospital     Hospital @relation(fields: [hospitalId], references: [id])
+  hospital     Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([doctorId])
+  @@index([hospitalId])
+}
+
+model IntakeSession {
+  id                String         @id @default(uuid())
+  patientId         String
+  patient           PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctorId          String?
+  doctor            DoctorProfile? @relation(fields: [doctorId], references: [id], onDelete: SetNull)
+  hospitalId        String?
+  hospital          Hospital?      @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+  rawTranscript     String         @db.Text
+  structuredAiData  Json
+  status            SessionStatus  @default(PENDING)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  prescriptions     PrescriptionDocument[]
+  alerts            EmergencyAlert[]
+
+  @@index([patientId])
+  @@index([doctorId])
+  @@index([hospitalId])
+  @@index([status])
+}
+
+model PrescriptionDocument {
+  id            String        @id @default(uuid())
+  sessionId     String
+  session       IntakeSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  extractedText String        @db.Text
+  createdAt     DateTime      @default(now())
+
+  @@index([sessionId])
+}
+
+model EmergencyAlert {
+  id            String        @id @default(uuid())
+  sessionId     String
+  session       IntakeSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  flaggedReason String
+  resolved      Boolean       @default(false)
+  resolvedAt    DateTime?
+  resolvedBy    String?       // Doctor userId who resolved
+  createdAt     DateTime      @default(now())
+
+  @@index([sessionId])
+  @@index([resolved])
 }
