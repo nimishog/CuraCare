@@ -3,16 +3,15 @@ import { useState } from "react";
 import SplashScreen from "./components/SplashScreen";
 import SelectLanguage from "./components/SelectLanguage";
 import SelectRole from "./components/SelectRole";
-import Check from "./components/check.jsx";
+import Check from "./components/check";
 import DoctorLogin from "./components/DoctorLogin";
-import OTPVerification from "./components/OTPVerification";
+import DoctorRegister from "./components/DoctorRegister";
 
 function App() {
   const [page, setPage] = useState("splash");
 
   const [language, setLanguage] = useState("");
   const [role, setRole] = useState("");
-  const [email, setEmail] = useState("");
 
   return (
     <>
@@ -40,21 +39,33 @@ function App() {
           onConfirm={(selectedRole) => {
             setRole(selectedRole);
 
-            if (selectedRole === "doctor") {
+            const selected =
+              selectedRole.toLowerCase();
+
+            if (selected === "doctor") {
               setPage("doctorLogin");
             }
 
-            if (selectedRole === "patient") {
+            if (selected === "patient") {
               setPage("check");
             }
           }}
         />
       )}
 
-      {/* DOCTOR LOGIN PAGE */}
+      {/* DOCTOR LOGIN */}
       {page === "doctorLogin" && (
         <DoctorLogin
           onBack={() => setPage("role")}
+          onRegister={() => setPage("doctorRegister")}
+        />
+      )}
+
+      {/* DOCTOR REGISTER */}
+      {page === "doctorRegister" && (
+        <DoctorRegister
+          onBack={() => setPage("doctorLogin")}
+          onLogin={() => setPage("doctorLogin")}
         />
       )}
 
@@ -62,23 +73,11 @@ function App() {
       {page === "check" && (
         <Check
           onBack={() => setPage("role")}
-          onConfirm={(enteredEmail) => {
-            setEmail(enteredEmail);
-
+          onConfirm={(email) => {
+            console.log("Patient Email:", email);
             console.log("Language:", language);
             console.log("Role:", role);
-            console.log("Email:", enteredEmail);
-
-            setPage("otp");
           }}
-        />
-      )}
-
-      {/* OTP PAGE */}
-      {page === "otp" && (
-        <OTPVerification
-          email={email}
-          onBack={() => setPage("check")}
         />
       )}
     </>

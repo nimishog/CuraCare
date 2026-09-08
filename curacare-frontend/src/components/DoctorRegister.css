@@ -1,8 +1,8 @@
 /* =========================================
-   DOCTOR LOGIN PAGE
+   DOCTOR REGISTER PAGE
 ========================================= */
 
-.doctor-login-page {
+.doctor-register-page {
   width: 100vw;
   min-height: 100vh;
 
@@ -31,7 +31,7 @@
    BACK BUTTON
 ========================================= */
 
-.doctor-back-button {
+.register-back-button {
   position: absolute;
 
   top: 40px;
@@ -58,7 +58,7 @@
   transition: 0.3s ease;
 }
 
-.doctor-back-button:hover {
+.register-back-button:hover {
   background: white;
 
   transform: translateX(-5px);
@@ -70,13 +70,13 @@
 
 
 /* =========================================
-   LOGIN CARD
+   REGISTER CARD
 ========================================= */
 
-.doctor-login-card {
+.doctor-register-card {
   width: 460px;
 
-  min-height: 520px;
+  min-height: 600px;
 
   background: rgba(255, 255, 255, 0.88);
 
@@ -84,7 +84,7 @@
 
   border-radius: 30px;
 
-  padding: 45px 55px;
+  padding: 42px 55px;
 
   box-sizing: border-box;
 
@@ -105,17 +105,17 @@
    BRAND
 ========================================= */
 
-.doctor-brand {
+.register-brand {
   display: flex;
   flex-direction: column;
 
   align-items: center;
 
-  margin-bottom: 38px;
+  margin-bottom: 32px;
 }
 
 
-.doctor-brand img {
+.register-brand img {
   width: 80px;
   height: 80px;
 
@@ -125,7 +125,7 @@
 }
 
 
-.doctor-brand span {
+.register-brand span {
   color: #35415e;
 
   font-size: 30px;
@@ -140,7 +140,7 @@
    FORM
 ========================================= */
 
-.doctor-form {
+.register-form {
   width: 100%;
 
   display: flex;
@@ -154,7 +154,7 @@
    INPUT FIELDS
 ========================================= */
 
-.doctor-input {
+.register-input {
   width: 100%;
 
   height: 58px;
@@ -179,17 +179,17 @@
 }
 
 
-.doctor-input::placeholder {
+.register-input::placeholder {
   color: #8992a3;
 }
 
 
-.doctor-input:hover {
+.register-input:hover {
   border-color: #2d8f91;
 }
 
 
-.doctor-input:focus {
+.register-input:focus {
   border-color: #2d8f91;
 
   background: white;
@@ -201,36 +201,10 @@
 
 
 /* =========================================
-   FORGOT PASSWORD
+   REGISTER BUTTON
 ========================================= */
 
-.forgot-password {
-  margin: -5px 0 5px;
-
-  text-align: right;
-
-  color: #2d8f91;
-
-  font-size: 14px;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-
-.forgot-password:hover {
-  color: #35415e;
-
-  text-decoration: underline;
-}
-
-
-/* =========================================
-   LOGIN BUTTON
-========================================= */
-
-.doctor-login-button {
+.doctor-register-button {
   width: 100%;
 
   height: 60px;
@@ -259,7 +233,7 @@
 }
 
 
-.doctor-login-button:hover {
+.doctor-register-button:hover {
   background: #2d8f91;
 
   transform: translateY(-3px);
@@ -270,16 +244,16 @@
 }
 
 
-.doctor-login-button:active {
+.doctor-register-button:active {
   transform: translateY(0);
 }
 
 
 /* =========================================
-   REGISTER TEXT
+   LOGIN TEXT
 ========================================= */
 
-.register-text {
+.login-text {
   margin: 15px 0 0;
 
   text-align: center;
@@ -290,7 +264,7 @@
 }
 
 
-.register-text button {
+.login-text button {
   border: none;
 
   background: transparent;
@@ -309,7 +283,7 @@
 }
 
 
-.register-text button:hover {
+.login-text button:hover {
   color: #35415e;
 
   text-decoration: underline;
@@ -322,23 +296,23 @@
 
 @media (max-width: 600px) {
 
-  .doctor-login-page {
+  .doctor-register-page {
     padding: 20px;
   }
 
 
-  .doctor-login-card {
+  .doctor-register-card {
     width: 100%;
 
     max-width: 450px;
 
     min-height: auto;
 
-    padding: 40px 28px;
+    padding: 38px 28px;
   }
 
 
-  .doctor-back-button {
+  .register-back-button {
     top: 20px;
     left: 20px;
 
@@ -349,18 +323,18 @@
   }
 
 
-  .doctor-brand img {
+  .register-brand img {
     width: 65px;
     height: 65px;
   }
 
 
-  .doctor-brand span {
+  .register-brand span {
     font-size: 26px;
   }
 
 
-  .doctor-input {
+  .register-input {
     height: 55px;
   }
 

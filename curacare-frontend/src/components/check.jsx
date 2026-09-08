@@ -5,64 +5,56 @@ import logo from "../assets/logo.png";
 import speaker from "../assets/sound.png";
 import muteSpeaker from "../assets/soundoff.png";
 
-export default function Check({ onBack, onConfirm }) {
-  const [email, setEmail] = useState("");
-  const [isMuted, setIsMuted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+export default function Check({ onBack, onVerified }) {
+  const [step, setStep] = useState("email");
 
-  const handleChange = (e) => {
-    setEmail(e.target.value);
-    setError("");
-  };
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+
+  const [isMuted, setIsMuted] = useState(false);
+  const [error, setError] = useState("");
 
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleConfirm = async () => {
+  /* EMAIL CONTINUE */
+  const handleEmailContinue = () => {
     if (!isValidEmail) {
       setError("Please enter a valid email address");
       return;
     }
 
-    try {
-      setLoading(true);
-      setError("");
+    setError("");
+    setStep("otp");
+  };
 
-      /*
-        BACKEND API CALL
+  /* OTP INPUT */
+  const handleOtpChange = (e) => {
+    const value = e.target.value.replace(/\D/g, "").slice(0, 6);
 
-        Change this URL according to your backend endpoint.
-      */
+    setOtp(value);
+    setError("");
+  };
 
-      const response = await fetch(
-        "http://localhost:5000/send-otp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to send OTP"
-        );
-      }
-
-      // Move to OTP page
-      onConfirm(email);
-
-    } catch (err) {
-      setError(err.message || "Something went wrong");
-    } finally {
-      setLoading(false);
+  /* OTP VERIFY - UI ONLY */
+  const handleVerify = () => {
+    if (otp.length !== 6) {
+      setError("Please enter a 6 digit verification code");
+      return;
     }
+
+    setError("");
+
+    // No actual OTP verification
+    if (onVerified) {
+      onVerified(email);
+    }
+  };
+
+  /* GO BACK FROM OTP TO EMAIL */
+  const handleOtpBack = () => {
+    setStep("email");
+    setOtp("");
+    setError("");
   };
 
   return (
@@ -72,69 +64,118 @@ export default function Check({ onBack, onConfirm }) {
         {/* BACK BUTTON */}
         <button
           className="check-back-button"
-          onClick={onBack}
+          onClick={step === "email" ? onBack : handleOtpBack}
         >
           ←
         </button>
-
 
         {/* BRAND */}
         <div className="check-brand">
           <img
             src={logo}
-            alt="MediKiosk Logo"
+            alt="CuraCare Logo"
           />
 
-          <span>MediKiosk</span>
+          <span>CuraCare</span>
         </div>
 
+        {/* EMAIL PAGE */}
+        {step === "email" && (
+          <div className="check-content">
 
-        {/* TITLE */}
-        <h1>Enter Your Email Address</h1>
+            <h1>Enter Your Email Address</h1>
 
-
-        {/* EMAIL INPUT */}
-        <div className="email-input-container">
-
-          <input
-            type="email"
-            value={email}
-            onChange={handleChange}
-            placeholder="Enter your email address"
-            className="email-input"
-            autoComplete="email"
-          />
-
-          {error && (
-            <p className="email-error">
-              {error}
+            <p className="check-subtitle">
+              Enter your email address to continue
             </p>
-          )}
 
-        </div>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError("");
+              }}
+              placeholder="Enter your email address"
+              className="email-input"
+            />
 
+            {error && (
+              <p className="email-error">
+                {error}
+              </p>
+            )}
 
-        {/* BUTTONS */}
-        <div className="check-buttons">
+            <div className="check-buttons">
 
-          <button
-            className="go-back-button"
-            onClick={onBack}
-          >
-            Go Back
-          </button>
+              <button
+                className="go-back-button"
+                onClick={onBack}
+              >
+                Go Back
+              </button>
 
+              <button
+                className="confirm-abha-button"
+                onClick={handleEmailContinue}
+              >
+                Continue
+              </button>
 
-          <button
-            className="confirm-abha-button"
-            disabled={!isValidEmail || loading}
-            onClick={handleConfirm}
-          >
-            {loading ? "Sending..." : "Confirm"}
-          </button>
+            </div>
 
-        </div>
+          </div>
+        )}
 
+        {/* OTP PAGE - SAME COMPONENT */}
+        {step === "otp" && (
+          <div className="check-content">
+
+            <h1>Verify Your Email</h1>
+
+            <p className="check-subtitle">
+              Enter the 6 digit verification code
+            </p>
+
+            <p className="email-display">
+              {email}
+            </p>
+
+            <input
+              type="text"
+              value={otp}
+              onChange={handleOtpChange}
+              placeholder="Enter OTP"
+              className="email-input otp-input"
+              inputMode="numeric"
+            />
+
+            {error && (
+              <p className="email-error">
+                {error}
+              </p>
+            )}
+
+            <div className="check-buttons">
+
+              <button
+                className="go-back-button"
+                onClick={handleOtpBack}
+              >
+                Change Email
+              </button>
+
+              <button
+                className="confirm-abha-button"
+                onClick={handleVerify}
+              >
+                Verify
+              </button>
+
+            </div>
+
+          </div>
+        )}
 
         {/* SOUND BUTTON */}
         <button
