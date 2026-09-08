@@ -6,14 +6,18 @@ import "./DoctorLogin.css";
 
 import logo from "../assets/logo.png";
 
-export default function DoctorLogin({ onBack, onRegister }) {
-  const [username, setUsername] = useState("");
+export default function DoctorLogin({
+  onBack,
+  onRegister,
+  onLogin
+}) {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!username || !password) {
+    if (!email || !password) {
       alert("Please enter email and password");
       return;
     }
@@ -21,20 +25,29 @@ export default function DoctorLogin({ onBack, onRegister }) {
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
-        username,
+        email,
         password
       );
 
       console.log("Doctor logged in:", userCredential.user);
 
-      alert("Doctor Login Successful!");
+      // Move to Doctor Dashboard
+      onLogin();
 
-      // Dashboard navigation will be connected here
-      // after we inspect the frontend guy's dashboard routing.
     } catch (error) {
       console.error("Doctor Login Error:", error);
 
-      alert("Invalid email or password.");
+      if (error.code === "auth/invalid-credential") {
+        alert("Invalid email or password.");
+      } else if (error.code === "auth/user-not-found") {
+        alert("No account found with this email.");
+      } else if (error.code === "auth/wrong-password") {
+        alert("Incorrect password.");
+      } else if (error.code === "auth/invalid-email") {
+        alert("Please enter a valid email address.");
+      } else {
+        alert("Login failed. Please try again.");
+      }
     }
   };
 
@@ -56,21 +69,24 @@ export default function DoctorLogin({ onBack, onRegister }) {
         <div className="doctor-brand">
           <img
             src={logo}
-            alt="MediKiosk Logo"
+            alt="CuraCare Logo"
           />
 
-          <span>Curacare</span>
+          <span>CuraCare</span>
         </div>
 
         {/* FORM */}
-        <div className="doctor-form">
+        <form
+          className="doctor-form"
+          onSubmit={handleLogin}
+        >
 
           <input
             className="doctor-input"
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
@@ -87,7 +103,7 @@ export default function DoctorLogin({ onBack, onRegister }) {
 
           <button
             className="doctor-login-button"
-            onClick={handleLogin}
+            type="submit"
           >
             Login
           </button>
@@ -95,12 +111,15 @@ export default function DoctorLogin({ onBack, onRegister }) {
           <p className="register-text">
             Don't have an account?
 
-            <button onClick={onRegister}>
+            <button
+              type="button"
+              onClick={onRegister}
+            >
               Register now
             </button>
           </p>
 
-        </div>
+        </form>
 
       </div>
 

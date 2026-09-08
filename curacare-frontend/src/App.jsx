@@ -7,6 +7,7 @@ import Check from "./components/check";
 import DoctorLogin from "./components/DoctorLogin";
 import DoctorRegister from "./components/DoctorRegister";
 import OTPVerification from "./components/OTPVerification";
+import DoctorDashboard from "./components/DoctorDashboard";
 
 function App() {
   const [page, setPage] = useState("splash");
@@ -14,7 +15,7 @@ function App() {
   const [language, setLanguage] = useState("");
   const [role, setRole] = useState("");
 
-  // Patient authentication
+  // Patient data
   const [email, setEmail] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
 
@@ -27,7 +28,7 @@ function App() {
         />
       )}
 
-      {/* LANGUAGE PAGE */}
+      {/* SELECT LANGUAGE */}
       {page === "language" && (
         <SelectLanguage
           onNext={(selectedLanguage) => {
@@ -37,7 +38,7 @@ function App() {
         />
       )}
 
-      {/* ROLE PAGE */}
+      {/* SELECT ROLE */}
       {page === "role" && (
         <SelectRole
           onBack={() => setPage("language")}
@@ -48,9 +49,7 @@ function App() {
 
             if (selected === "doctor") {
               setPage("doctorLogin");
-            }
-
-            if (selected === "patient") {
+            } else if (selected === "patient") {
               setPage("check");
             }
           }}
@@ -61,7 +60,12 @@ function App() {
       {page === "doctorLogin" && (
         <DoctorLogin
           onBack={() => setPage("role")}
+
           onRegister={() => setPage("doctorRegister")}
+
+          onLogin={() => {
+            setPage("doctorDashboard");
+          }}
         />
       )}
 
@@ -69,7 +73,15 @@ function App() {
       {page === "doctorRegister" && (
         <DoctorRegister
           onBack={() => setPage("doctorLogin")}
+
           onLogin={() => setPage("doctorLogin")}
+        />
+      )}
+
+      {/* DOCTOR DASHBOARD */}
+      {page === "doctorDashboard" && (
+        <DoctorDashboard
+          onLogout={() => setPage("doctorLogin")}
         />
       )}
 
@@ -77,7 +89,9 @@ function App() {
       {page === "check" && (
         <Check
           onBack={() => setPage("role")}
+
           setGeneratedOtp={setGeneratedOtp}
+
           onConfirm={(enteredEmail) => {
             setEmail(enteredEmail);
 
@@ -94,7 +108,9 @@ function App() {
       {page === "otp" && (
         <OTPVerification
           email={email}
+
           generatedOtp={generatedOtp}
+
           onBack={() => setPage("check")}
         />
       )}

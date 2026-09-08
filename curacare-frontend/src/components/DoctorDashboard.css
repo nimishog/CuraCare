@@ -1,0 +1,727 @@
+/* ============================= */
+/* GLOBAL */
+/* ============================= */
+
+* {
+  box-sizing: border-box;
+}
+
+.dashboard-page {
+  min-height: 100vh;
+
+  padding: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f7f7f7,
+      #eeeeee
+    );
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  color: #273247;
+}
+
+
+/* ============================= */
+/* NAVBAR */
+/* ============================= */
+
+.dashboard-navbar {
+
+  width: 100%;
+
+  height: 62px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding:
+    0
+    28px;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #a8c1c7,
+      #94b6bd
+    );
+
+}
+
+
+.dashboard-logo {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  font-weight: 600;
+
+  font-size: 16px;
+
+}
+
+
+.dashboard-logo img {
+
+  width: 48px;
+
+  height: 48px;
+
+  object-fit: contain;
+
+  background: white;
+
+  padding: 7px;
+
+  border-radius: 14px;
+
+}
+
+
+.dashboard-nav-links {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 55px;
+
+  font-weight: 500;
+
+}
+
+
+.dashboard-nav-links span {
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+}
+
+
+.dashboard-nav-links span:hover {
+
+  opacity: 0.65;
+
+}
+
+
+/* ============================= */
+/* MAIN CONTENT */
+/* ============================= */
+
+.dashboard-content {
+
+  display: grid;
+
+  grid-template-columns:
+    1.55fr
+    1fr;
+
+  gap: 28px;
+
+  margin-top: 15px;
+
+}
+
+
+/* ============================= */
+/* PATIENT SUMMARY */
+/* ============================= */
+
+.patient-summary {
+
+  min-height: 665px;
+
+  padding:
+    32px
+    40px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #a5bec4,
+      #8eafb6
+    );
+
+  box-shadow:
+    0 8px 20px
+    rgba(0,0,0,0.12);
+
+}
+
+
+.patient-summary h3 {
+
+  margin-top: 0;
+
+  margin-bottom: 18px;
+
+  font-size: 16px;
+
+  letter-spacing: 0.3px;
+
+}
+
+
+.patient-summary h3:not(:first-child) {
+
+  margin-top: 28px;
+
+}
+
+
+.patient-summary ul {
+
+  padding-left: 22px;
+
+  margin: 0;
+
+}
+
+
+.patient-summary li {
+
+  margin-bottom: 6px;
+
+  font-size: 14px;
+
+}
+
+
+.complaint {
+
+  font-weight: 600;
+
+  line-height: 1.6;
+
+  font-size: 15px;
+
+}
+
+
+/* ============================= */
+/* RIGHT SECTION */
+/* ============================= */
+
+.doctor-right-section {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+
+}
+
+
+/* ============================= */
+/* PATIENT CARD */
+/* ============================= */
+
+.patient-card {
+
+  min-height: 135px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 22px;
+
+  padding: 10px 24px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #f4f4f4,
+      #9dbcc2
+    );
+
+  box-shadow:
+    0 8px 20px
+    rgba(0,0,0,0.10);
+
+}
+
+
+.patient-image {
+
+  width: 120px;
+
+  height: 120px;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  flex-shrink: 0;
+
+}
+
+
+.patient-img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+
+.patient-info {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+}
+
+
+.patient-info p {
+
+  margin: 0;
+
+  font-size: 13px;
+
+  line-height: 1.8;
+
+}
+
+
+/* ============================= */
+/* PRESCRIPTION CARD */
+/* ============================= */
+
+.prescription-card {
+
+  position: relative;
+
+  flex: 1;
+
+  min-height: 375px;
+
+  padding: 28px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #9dbbc1,
+      #88aab2
+    );
+
+  box-shadow:
+    0 8px 20px
+    rgba(0,0,0,0.12);
+
+}
+
+
+.prescription-card h3 {
+
+  margin: 0;
+
+  margin-bottom: 28px;
+
+  font-size: 17px;
+
+}
+
+
+/* ============================= */
+/* TABLE HEADER */
+/* ============================= */
+
+.prescription-header {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr
+    1fr
+    90px;
+
+  gap: 18px;
+
+  margin-bottom: 10px;
+
+  padding:
+    0
+    8px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+
+.prescription-header span {
+
+  display: block;
+
+}
+
+
+/* ============================= */
+/* PRESCRIPTION LIST */
+/* ============================= */
+
+.prescription-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+  max-height: 190px;
+
+  overflow-y: auto;
+
+  padding-right: 5px;
+
+}
+
+
+/* SCROLLBAR */
+
+.prescription-list::-webkit-scrollbar {
+
+  width: 5px;
+
+}
+
+
+.prescription-list::-webkit-scrollbar-thumb {
+
+  background: rgba(255,255,255,0.6);
+
+  border-radius: 10px;
+
+}
+
+
+/* ============================= */
+/* PRESCRIPTION ROW */
+/* ============================= */
+
+.prescription-row {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr
+    1fr
+    90px;
+
+  gap: 18px;
+
+  align-items: center;
+
+}
+
+
+/* INPUTS */
+
+.prescription-row input {
+
+  width: 100%;
+
+  height: 42px;
+
+  border: none;
+
+  outline: none;
+
+  padding:
+    0
+    14px;
+
+  border-radius: 12px;
+
+  background: #f1f1f3;
+
+  font-size: 13px;
+
+  color: #273247;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(0,0,0,0.05);
+
+}
+
+
+.prescription-row input:focus {
+
+  box-shadow:
+    0 0 0 2px
+    rgba(255,255,255,0.55);
+
+}
+
+
+/* ============================= */
+/* REMOVE BUTTON */
+/* ============================= */
+
+.remove-button {
+
+  height: 40px;
+
+  border: none;
+
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  color: #3c465b;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+}
+
+
+.remove-button:hover {
+
+  transform: translateY(-2px);
+
+  background: #f0f0f0;
+
+}
+
+
+/* ============================= */
+/* PRESCRIPTION BUTTONS */
+/* ============================= */
+
+.prescription-buttons {
+
+  position: absolute;
+
+  left: 28px;
+
+  right: 28px;
+
+  bottom: 22px;
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 16px;
+
+}
+
+
+.prescription-buttons button {
+
+  min-width: 150px;
+
+  height: 44px;
+
+  border: none;
+
+  border-radius: 25px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+}
+
+
+/* ADD MORE */
+
+.add-more-button {
+
+  background: #f2f2f4;
+
+  color: #3d475c;
+
+}
+
+
+.add-more-button:hover {
+
+  transform: translateY(-2px);
+
+}
+
+
+/* PRINT */
+
+.print-button {
+
+  background: #f2f2f4;
+
+  color: #3d475c;
+
+}
+
+
+.print-button:hover {
+
+  transform: translateY(-2px);
+
+}
+
+
+/* ============================= */
+/* NEXT PATIENT */
+/* ============================= */
+
+.next-patient {
+
+  width: 100%;
+
+  height: 60px;
+
+  border: none;
+
+  border-radius: 22px;
+
+  background: #f3f3f4;
+
+  color: #3c465b;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 14px
+    rgba(0,0,0,0.12);
+
+  transition: 0.2s;
+
+}
+
+
+.next-patient:hover {
+
+  transform: translateY(-2px);
+
+}
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 1000px) {
+
+  .dashboard-content {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .dashboard-nav-links {
+
+    gap: 20px;
+
+  }
+
+
+}
+
+
+@media (max-width: 700px) {
+
+  .dashboard-navbar {
+
+    height: auto;
+
+    padding: 15px;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+  }
+
+
+  .dashboard-nav-links {
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 15px;
+
+  }
+
+
+  .prescription-header {
+
+    display: none;
+
+  }
+
+
+  .prescription-row {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .prescription-card {
+
+    min-height: 550px;
+
+  }
+
+
+  .prescription-buttons {
+
+    flex-direction: column;
+
+  }
+
+
+  .prescription-buttons button {
+
+    width: 100%;
+
+  }
+
+}
