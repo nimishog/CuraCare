@@ -1,0 +1,346 @@
+/* Full Page */
+.role-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(
+    135deg,
+    #e8f0f3,
+    #b8d6dc,
+    #d9ead9
+  );
+
+  font-family: Arial, sans-serif;
+}
+
+
+/* Main Card */
+.role-card {
+  width: 88%;
+  min-height: 82vh;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  border-radius: 28px;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 30px 50px;
+  box-sizing: border-box;
+}
+
+
+/* Back Button */
+.back-button {
+  position: absolute;
+
+  top: 60px;
+  left: 45px;
+
+  border: none;
+  background: transparent;
+
+  font-size: 45px;
+  color: #37415a;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.back-button:hover {
+  transform: translateX(-5px);
+}
+
+
+/* Branding */
+/* Branding */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.brand-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 55px;
+  height: 55px;
+}
+
+.brand-placeholder img {
+  width: 55px;
+  height: 55px;
+
+  object-fit: contain;
+  display: block;
+}
+
+.brand h2 {
+  margin: 2px 0 0;
+
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+
+  color: #37415a;
+}
+
+/* Title */
+.role-card h1 {
+  margin-top: 20px;
+
+  font-size: 38px;
+  font-weight: 400;
+
+  color: #37415a;
+}
+
+
+/* Role Cards Container */
+.role-options {
+  display: flex;
+
+  justify-content: center;
+  gap: 40px;
+
+  margin-top: 40px;
+}
+
+
+/* Individual Role Card */
+.role-option {
+  width: 200px;
+  height: 200px;
+
+  border: 2px solid transparent;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.85);
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  color: #5e858a;
+
+  transition: 
+    transform 0.25s ease,
+    border 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.role-option:hover {
+  transform: translateY(-5px);
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Selected Doctor/Patient */
+.role-option.selected {
+  border: 3px solid #5e858a;
+
+  background: #f5ffff;
+
+  transform: translateY(-5px);
+
+  box-shadow: 0 8px 25px rgba(94, 133, 138, 0.2);
+}
+
+
+/* Role Icon */
+.role-icon {
+  font-size: 58px;
+
+  margin-bottom: 15px;
+}
+
+
+/* Role Name */
+.role-name {
+  font-size: 28px;
+
+  font-weight: 400;
+
+  color: #5e858a;
+}
+
+
+/* Bottom Buttons */
+.role-buttons {
+  display: flex;
+
+  gap: 25px;
+
+  margin-top: 35px;
+
+  justify-content: center;
+}
+
+
+/* Go Back Button */
+.go-back {
+  width: 250px;
+  height: 65px;
+
+  border-radius: 40px;
+
+  border: 2px solid #5e858a;
+
+  background: transparent;
+
+  color: #37415a;
+
+  font-size: 25px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+
+.go-back:hover {
+  background: #edf7f7;
+
+  transform: scale(1.02);
+}
+
+
+/* Confirm Button */
+.confirm-button {
+  width: 250px;
+  height: 65px;
+
+  border: none;
+
+  border-radius: 40px;
+
+  background: #303853;
+
+  color: white;
+
+  font-size: 25px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+
+/* Disabled Confirm Button */
+.confirm-button:disabled {
+  background: #9da3b0;
+
+  cursor: not-allowed;
+
+  opacity: 0.7;
+}
+
+
+/* Active Confirm Button */
+.confirm-button:not(:disabled):hover {
+  background: #252c45;
+
+  transform: scale(1.03);
+}
+
+
+/* Sound Button */
+.sound-button {
+  position: absolute;
+
+  bottom: 35px;
+  left: 40px;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  padding: 5px;
+}
+
+
+.sound-button img {
+  width: 45px;
+  height: 45px;
+
+  object-fit: contain;
+}
+
+
+/* Responsive */
+@media (max-width: 700px) {
+
+  .role-card {
+    width: 95%;
+    padding: 30px 20px;
+  }
+
+
+  .role-card h1 {
+    font-size: 28px;
+
+    text-align: center;
+  }
+
+
+  .role-options {
+    gap: 15px;
+  }
+
+
+  .role-option {
+    width: 140px;
+    height: 160px;
+  }
+
+
+  .role-icon {
+    font-size: 45px;
+  }
+
+
+  .role-name {
+    font-size: 22px;
+  }
+
+
+  .role-buttons {
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+
+  .back-button {
+    top: 30px;
+    left: 25px;
+
+    font-size: 35px;
+  }
+
+}

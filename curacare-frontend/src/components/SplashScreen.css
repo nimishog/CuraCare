@@ -1,0 +1,44 @@
+.splash-screen {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.logo-animation {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+
+  display: block;
+}
+
+.app-name {
+  margin-top: 15px;
+
+  font-size: 48px;
+  font-weight: 700;
+  color: #26344f;
+
+  opacity: 0;
+
+  animation: showCuraCare 1.5s ease forwards;
+}
+
+@keyframes showCuraCare {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
