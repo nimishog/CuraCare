@@ -20,12 +20,18 @@ export default function SelectRole({ onBack, onConfirm }) {
 
         {/* Brand */}
         <div className="brand">
-  <div className="brand-placeholder">
-    <img src={logo} alt="CuraCare Logo" />
-  </div>
+          <div className="brand-placeholder">
+            <img src={logo} alt="CuraCare Logo" />
+          </div>
 
-  <h2>CuraCare</h2>
-</div>
+          <h2>CuraCare</h2>
+        </div>
+
+        {/* HEADING */}
+        <h1 className="role-heading">
+          Select Your Role
+        </h1>
+
         {/* Role Cards */}
         <div className="role-options">
 
@@ -36,7 +42,13 @@ export default function SelectRole({ onBack, onConfirm }) {
             }`}
             onClick={() => setSelectedRole("doctor")}
           >
-            <div className="role-icon">👨‍⚕️</div>
+            <div className="role-icon doctor-icon">
+              <div className="doctor-head"></div>
+              <div className="doctor-body">
+                <div className="doctor-cross">+</div>
+              </div>
+            </div>
+
             <span>Doctor</span>
           </button>
 
@@ -47,7 +59,12 @@ export default function SelectRole({ onBack, onConfirm }) {
             }`}
             onClick={() => setSelectedRole("patient")}
           >
-            <div className="role-icon">🧑‍🦽</div>
+            <div className="role-icon patient-icon">
+              <div className="patient-head"></div>
+              <div className="patient-body"></div>
+              <div className="patient-wheel"></div>
+            </div>
+
             <span>Patient</span>
           </button>
 

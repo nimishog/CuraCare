@@ -3,8 +3,9 @@ import { useState } from "react";
 import SplashScreen from "./components/SplashScreen";
 import SelectLanguage from "./components/SelectLanguage";
 import SelectRole from "./components/SelectRole";
-import Check from "./components/check.jsx";
+import Check from "./components/check";
 import DoctorLogin from "./components/DoctorLogin";
+import DoctorRegister from "./components/DoctorRegister";
 import OTPVerification from "./components/OTPVerification";
 
 function App() {
@@ -12,8 +13,10 @@ function App() {
 
   const [language, setLanguage] = useState("");
   const [role, setRole] = useState("");
- const [email, setEmail] = useState("");
-  const [generatedOtp, setGeneratedOtp] = useState("");;
+
+  // Patient authentication
+  const [email, setEmail] = useState("");
+  const [generatedOtp, setGeneratedOtp] = useState("");
 
   return (
     <>
@@ -41,30 +44,41 @@ function App() {
           onConfirm={(selectedRole) => {
             setRole(selectedRole);
 
-            if (selectedRole === "doctor") {
+            const selected = selectedRole.toLowerCase();
+
+            if (selected === "doctor") {
               setPage("doctorLogin");
             }
 
-            if (selectedRole === "patient") {
+            if (selected === "patient") {
               setPage("check");
             }
           }}
         />
       )}
 
-      {/* DOCTOR LOGIN PAGE */}
+      {/* DOCTOR LOGIN */}
       {page === "doctorLogin" && (
         <DoctorLogin
           onBack={() => setPage("role")}
+          onRegister={() => setPage("doctorRegister")}
+        />
+      )}
+
+      {/* DOCTOR REGISTER */}
+      {page === "doctorRegister" && (
+        <DoctorRegister
+          onBack={() => setPage("doctorLogin")}
+          onLogin={() => setPage("doctorLogin")}
         />
       )}
 
       {/* PATIENT EMAIL PAGE */}
       {page === "check" && (
         <Check
-        onBack={() => setPage("role")}
-        setGeneratedOtp={setGeneratedOtp}
-        onConfirm={(enteredEmail) => {
+          onBack={() => setPage("role")}
+          setGeneratedOtp={setGeneratedOtp}
+          onConfirm={(enteredEmail) => {
             setEmail(enteredEmail);
 
             console.log("Language:", language);
@@ -76,12 +90,12 @@ function App() {
         />
       )}
 
-      {/* OTP PAGE */}
+      {/* PATIENT OTP PAGE */}
       {page === "otp" && (
         <OTPVerification
-        email={email}
-        generatedOtp={generatedOtp}
-        onBack={() => setPage("check")}
+          email={email}
+          generatedOtp={generatedOtp}
+          onBack={() => setPage("check")}
         />
       )}
     </>

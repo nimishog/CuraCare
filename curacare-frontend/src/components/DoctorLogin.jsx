@@ -6,115 +6,101 @@ import "./DoctorLogin.css";
 
 import logo from "../assets/logo.png";
 
-export default function DoctorLogin({ onBack }) {
-  const [email, setEmail] = useState("");
+export default function DoctorLogin({ onBack, onRegister }) {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-const handleLogin = async (e) => {
-  e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    if (!username || !password) {
+      alert("Please enter email and password");
+      return;
+    }
 
-    console.log("Doctor logged in:", userCredential.user);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        username,
+        password
+      );
 
-    alert("Doctor Login Successful!");
-  } catch (error) {
-    console.error("Doctor Login Error:", error);
+      console.log("Doctor logged in:", userCredential.user);
 
-    alert("Invalid email or password.");
-  }
-};
+      alert("Doctor Login Successful!");
+
+      // Dashboard navigation will be connected here
+      // after we inspect the frontend guy's dashboard routing.
+    } catch (error) {
+      console.error("Doctor Login Error:", error);
+
+      alert("Invalid email or password.");
+    }
+  };
 
   return (
     <div className="doctor-login-page">
 
-      {/* LEFT SIDE */}
-      <div className="doctor-visual-section">
-
-        <div className="medical-circle">
-
-          <div className="medical-image image-one">
-            <img
-              src="/hospital.jpg"
-              alt="Hospital"
-            />
-          </div>
-
-          <div className="medical-image image-two">
-            <img
-              src="/tablet.jpg"
-              alt="Medical Technology"
-            />
-          </div>
-
-          <div className="medical-image image-three">
-            <img
-              src="/doctor.jpg"
-              alt="Doctor"
-            />
-          </div>
-
-          <div className="medical-icon icon-one">✚</div>
-          <div className="medical-icon icon-two">✚</div>
-          <div className="medical-icon icon-three">✚</div>
-
-        </div>
-
-      </div>
-
+      {/* BACK BUTTON */}
+      <button
+        className="doctor-back-button"
+        onClick={onBack}
+      >
+        ←
+      </button>
 
       {/* LOGIN CARD */}
       <div className="doctor-login-card">
 
-        {/* Back Button */}
-        <button
-          className="doctor-back-button"
-          onClick={onBack}
-        >
-          ←
-        </button>
-
-        {/* Branding */}
+        {/* BRAND */}
         <div className="doctor-brand">
-          <img src={logo} alt="MediKiosk Logo" />
-          <h2>Curacure</h2>
+          <img
+            src={logo}
+            alt="MediKiosk Logo"
+          />
+
+          <span>Curacare</span>
         </div>
 
-
-        <form onSubmit={handleLogin}>
+        {/* FORM */}
+        <div className="doctor-form">
 
           <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            className="doctor-input"
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
 
           <input
+            className="doctor-input"
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
+          <p className="forgot-password">
+            Forgot password?
+          </p>
+
           <button
-            type="submit"
             className="doctor-login-button"
+            onClick={handleLogin}
           >
             Login
           </button>
 
-        </form>
+          <p className="register-text">
+            Don't have an account?
 
-        <p className="register-text">
-          Don't have an account?
-          <span> Register</span>
-        </p>
+            <button onClick={onRegister}>
+              Register now
+            </button>
+          </p>
+
+        </div>
 
       </div>
 

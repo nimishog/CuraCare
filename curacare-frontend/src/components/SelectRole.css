@@ -1,28 +1,42 @@
-/* Full Page */
+* {
+  box-sizing: border-box;
+}
+
+/* =================================
+   PAGE
+================================= */
+
 .role-page {
+  width: 100vw;
   min-height: 100vh;
-  width: 100%;
+
+  background: linear-gradient(
+    135deg,
+    #dceef2,
+    #b9d7df,
+    #d7eee8
+  );
+
   display: flex;
   justify-content: center;
   align-items: center;
 
-  background: linear-gradient(
-    135deg,
-    #e8f0f3,
-    #b8d6dc,
-    #d9ead9
-  );
+  padding: 40px;
 
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 
-/* Main Card */
-.role-card {
-  width: 88%;
-  min-height: 82vh;
+/* =================================
+   MAIN CARD
+================================= */
 
-  background: rgba(255, 255, 255, 0.82);
+.role-card {
+  width: 94%;
+  max-width: 1100px;
+  min-height: 90vh;
+
+  background: rgba(255, 255, 255, 0.8);
 
   border-radius: 28px;
 
@@ -32,23 +46,27 @@
   flex-direction: column;
   align-items: center;
 
-  padding: 30px 50px;
-  box-sizing: border-box;
+  padding: 45px;
 }
 
 
-/* Back Button */
+/* =================================
+   BACK BUTTON
+================================= */
+
 .back-button {
   position: absolute;
 
-  top: 60px;
+  top: 55px;
   left: 45px;
 
   border: none;
+
   background: transparent;
 
   font-size: 45px;
-  color: #37415a;
+
+  color: #35415e;
 
   cursor: pointer;
 
@@ -60,214 +78,338 @@
 }
 
 
-/* Branding */
-/* Branding */
+/* =================================
+   BRAND
+================================= */
+
 .brand {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
-  margin-top: 0;
-  margin-bottom: 5px;
+  align-items: center;
+
+  color: #35415e;
 }
 
+
 .brand-placeholder {
+  width: 70px;
+  height: 70px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 55px;
-  height: 55px;
 }
+
 
 .brand-placeholder img {
-  width: 55px;
-  height: 55px;
+  width: 100%;
+  height: 100%;
 
   object-fit: contain;
-  display: block;
 }
+
 
 .brand h2 {
-  margin: 2px 0 0;
+  margin: 5px 0 0;
 
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.2;
+  font-size: 27px;
 
-  color: #37415a;
-}
-
-/* Title */
-.role-card h1 {
-  margin-top: 20px;
-
-  font-size: 38px;
-  font-weight: 400;
-
-  color: #37415a;
+  font-weight: 700;
 }
 
 
-/* Role Cards Container */
+/* =================================
+   HEADING
+================================= */
+
+.role-heading {
+  margin: 50px 0 35px;
+
+  font-size: 46px;
+
+  font-weight: 500;
+
+  color: #35415e;
+}
+
+
+/* =================================
+   ROLE OPTIONS
+================================= */
+
 .role-options {
   display: flex;
 
-  justify-content: center;
-  gap: 40px;
+  gap: 45px;
 
-  margin-top: 40px;
+  justify-content: center;
+  align-items: center;
 }
 
 
-/* Individual Role Card */
+/* ROLE CARD */
+
 .role-option {
-  width: 200px;
-  height: 200px;
+  width: 230px;
+  height: 240px;
 
-  border: 2px solid transparent;
+  border: none;
 
-  border-radius: 24px;
+  border-radius: 22px;
 
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.65);
 
   display: flex;
   flex-direction: column;
 
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
+  gap: 20px;
 
   cursor: pointer;
 
-  color: #5e858a;
+  color: #35415e;
 
-  transition: 
-    transform 0.25s ease,
-    border 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: 0.3s ease;
+
+  box-shadow:
+    0 5px 20px
+    rgba(53, 65, 94, 0.08);
 }
 
 
 .role-option:hover {
-  transform: translateY(-5px);
+  transform: translateY(-7px);
 
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 12px 30px
+    rgba(53, 65, 94, 0.15);
 }
 
 
-/* Selected Doctor/Patient */
 .role-option.selected {
-  border: 3px solid #5e858a;
+  border: 3px solid #2d8f91;
 
-  background: #f5ffff;
+  transform: translateY(-7px);
 
-  transform: translateY(-5px);
-
-  box-shadow: 0 8px 25px rgba(94, 133, 138, 0.2);
+  background: white;
 }
 
 
-/* Role Icon */
+.role-option span {
+  font-size: 26px;
+
+  font-weight: 500;
+
+  color: #35415e;
+}
+
+
+/* =================================
+   ROLE ICON CONTAINER
+================================= */
+
 .role-icon {
-  font-size: 58px;
+  width: 95px;
+  height: 105px;
 
-  margin-bottom: 15px;
+  position: relative;
 }
 
 
-/* Role Name */
-.role-name {
-  font-size: 28px;
+/* =================================
+   DOCTOR ICON
+================================= */
 
-  font-weight: 400;
+.doctor-head {
+  width: 38px;
+  height: 38px;
 
-  color: #5e858a;
+  border-radius: 50%;
+
+  background: #2d8f91;
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  transform: translateX(-50%);
 }
 
 
-/* Bottom Buttons */
+.doctor-body {
+  width: 70px;
+  height: 58px;
+
+  background: #35415e;
+
+  border-radius: 35px 35px 12px 12px;
+
+  position: absolute;
+
+  bottom: 0;
+  left: 50%;
+
+  transform: translateX(-50%);
+}
+
+
+.doctor-cross {
+  position: absolute;
+
+  top: 8px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 26px;
+  height: 26px;
+
+  border-radius: 6px;
+
+  background: white;
+
+  color: #2d8f91;
+
+  font-size: 25px;
+
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =================================
+   PATIENT ICON
+================================= */
+
+.patient-head {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  background: #2d8f91;
+
+  position: absolute;
+
+  top: 5px;
+  left: 18px;
+}
+
+
+.patient-body {
+  width: 50px;
+  height: 55px;
+
+  background: #35415e;
+
+  border-radius: 25px 25px 10px 10px;
+
+  position: absolute;
+
+  top: 38px;
+  left: 15px;
+
+  transform: rotate(-15deg);
+}
+
+
+.patient-wheel {
+  width: 55px;
+  height: 55px;
+
+  border: 9px solid #2d8f91;
+
+  border-radius: 50%;
+
+  position: absolute;
+
+  bottom: 0;
+  right: 0;
+}
+
+
+/* =================================
+   BUTTON AREA
+================================= */
+
 .role-buttons {
   display: flex;
 
   gap: 25px;
 
-  margin-top: 35px;
-
-  justify-content: center;
+  margin-top: 45px;
 }
 
 
-/* Go Back Button */
-.go-back {
-  width: 250px;
-  height: 65px;
+.go-back,
+.confirm-button {
+  width: 210px;
+  height: 62px;
 
   border-radius: 40px;
 
-  border: 2px solid #5e858a;
-
-  background: transparent;
-
-  color: #37415a;
-
-  font-size: 25px;
-  font-weight: 500;
+  font-size: 22px;
 
   cursor: pointer;
 
-  transition: 0.2s;
+  transition: 0.25s;
+}
+
+
+/* GO BACK */
+
+.go-back {
+  border: 2px solid #648d90;
+
+  background: rgba(255, 255, 255, 0.5);
+
+  color: #35415e;
 }
 
 
 .go-back:hover {
-  background: #edf7f7;
-
-  transform: scale(1.02);
-}
-
-
-/* Confirm Button */
-.confirm-button {
-  width: 250px;
-  height: 65px;
-
-  border: none;
-
-  border-radius: 40px;
-
-  background: #303853;
-
-  color: white;
-
-  font-size: 25px;
-  font-weight: 500;
-
-  cursor: pointer;
-
-  transition: 0.25s ease;
-}
-
-
-/* Disabled Confirm Button */
-.confirm-button:disabled {
-  background: #9da3b0;
-
-  cursor: not-allowed;
-
-  opacity: 0.7;
-}
-
-
-/* Active Confirm Button */
-.confirm-button:not(:disabled):hover {
-  background: #252c45;
+  background: white;
 
   transform: scale(1.03);
 }
 
 
-/* Sound Button */
+/* CONFIRM */
+
+.confirm-button {
+  border: none;
+
+  background: #35415e;
+
+  color: white;
+}
+
+
+.confirm-button:hover:not(:disabled) {
+  background: #2d8f91;
+
+  transform: scale(1.03);
+}
+
+
+.confirm-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+
+/* =================================
+   SOUND BUTTON
+================================= */
+
 .sound-button {
   position: absolute;
 
@@ -285,62 +427,93 @@
 
 
 .sound-button img {
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
 
   object-fit: contain;
 }
 
 
-/* Responsive */
+/* =================================
+   RESPONSIVE
+================================= */
+
 @media (max-width: 700px) {
 
+  .role-page {
+    padding: 15px;
+  }
+
+
   .role-card {
-    width: 95%;
+    width: 100%;
+
+    min-height: 95vh;
+
     padding: 30px 20px;
   }
 
 
-  .role-card h1 {
-    font-size: 28px;
+  .back-button {
+    top: 25px;
+    left: 20px;
+
+    font-size: 35px;
+  }
+
+
+  .brand-placeholder {
+    width: 55px;
+    height: 55px;
+  }
+
+
+  .brand h2 {
+    font-size: 22px;
+  }
+
+
+  .role-heading {
+    margin-top: 55px;
+
+    font-size: 32px;
 
     text-align: center;
   }
 
 
   .role-options {
-    gap: 15px;
+    flex-direction: column;
+
+    gap: 20px;
   }
 
 
   .role-option {
-    width: 140px;
-    height: 160px;
-  }
-
-
-  .role-icon {
-    font-size: 45px;
-  }
-
-
-  .role-name {
-    font-size: 22px;
+    width: 240px;
+    height: 180px;
   }
 
 
   .role-buttons {
+    margin-top: 30px;
+
     flex-direction: column;
 
-    align-items: center;
+    width: 240px;
   }
 
 
-  .back-button {
-    top: 30px;
-    left: 25px;
+  .go-back,
+  .confirm-button {
+    width: 100%;
+  }
 
-    font-size: 35px;
+
+  .sound-button {
+    left: 20px;
+
+    bottom: 20px;
   }
 
 }

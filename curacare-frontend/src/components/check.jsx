@@ -7,7 +7,11 @@ import logo from "../assets/logo.png";
 import speaker from "../assets/sound.png";
 import muteSpeaker from "../assets/soundoff.png";
 
-export default function Check({ onBack, onConfirm, setGeneratedOtp }) {
+export default function Check({
+  onBack,
+  onConfirm,
+  setGeneratedOtp,
+}) {
   const [email, setEmail] = useState("");
   const [isMuted, setIsMuted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -52,7 +56,7 @@ export default function Check({ onBack, onConfirm, setGeneratedOtp }) {
 
       console.log("OTP sent successfully");
 
-      // Move to OTP page
+      // Move to separate OTP verification page
       onConfirm(email);
     } catch (err) {
       console.error("EmailJS Error:", err);
@@ -78,10 +82,10 @@ export default function Check({ onBack, onConfirm, setGeneratedOtp }) {
         <div className="check-brand">
           <img
             src={logo}
-            alt="MediKiosk Logo"
+            alt="CuraCare Logo"
           />
 
-          <span>MediKiosk</span>
+          <span>CuraCare</span>
         </div>
 
         {/* TITLE */}
@@ -107,6 +111,7 @@ export default function Check({ onBack, onConfirm, setGeneratedOtp }) {
 
         {/* BUTTONS */}
         <div className="check-buttons">
+
           <button
             className="go-back-button"
             onClick={onBack}
@@ -121,6 +126,7 @@ export default function Check({ onBack, onConfirm, setGeneratedOtp }) {
           >
             {loading ? "Sending..." : "Confirm"}
           </button>
+
         </div>
 
         {/* SOUND BUTTON */}
