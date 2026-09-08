@@ -12,7 +12,8 @@ function App() {
 
   const [language, setLanguage] = useState("");
   const [role, setRole] = useState("");
-  const [email, setEmail] = useState("");
+ const [email, setEmail] = useState("");
+  const [generatedOtp, setGeneratedOtp] = useState("");;
 
   return (
     <>
@@ -61,8 +62,9 @@ function App() {
       {/* PATIENT EMAIL PAGE */}
       {page === "check" && (
         <Check
-          onBack={() => setPage("role")}
-          onConfirm={(enteredEmail) => {
+        onBack={() => setPage("role")}
+        setGeneratedOtp={setGeneratedOtp}
+        onConfirm={(enteredEmail) => {
             setEmail(enteredEmail);
 
             console.log("Language:", language);
@@ -77,8 +79,9 @@ function App() {
       {/* OTP PAGE */}
       {page === "otp" && (
         <OTPVerification
-          email={email}
-          onBack={() => setPage("check")}
+        email={email}
+        generatedOtp={generatedOtp}
+        onBack={() => setPage("check")}
         />
       )}
     </>

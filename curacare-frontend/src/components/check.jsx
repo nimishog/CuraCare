@@ -1,11 +1,13 @@
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
+
 import "./check.css";
 
 import logo from "../assets/logo.png";
 import speaker from "../assets/sound.png";
 import muteSpeaker from "../assets/soundoff.png";
 
-export default function Check({ onBack, onConfirm }) {
+export default function Check({ onBack, onConfirm, setGeneratedOtp }) {
   const [email, setEmail] = useState("");
   const [isMuted, setIsMuted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -16,7 +18,8 @@ export default function Check({ onBack, onConfirm }) {
     setError("");
   };
 
-  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isValidEmail =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleConfirm = async () => {
     if (!isValidEmail) {
@@ -28,38 +31,32 @@ export default function Check({ onBack, onConfirm }) {
       setLoading(true);
       setError("");
 
-      /*
-        BACKEND API CALL
+      // Generate a 6-digit OTP
+      const newOtp = Math.floor(
+        100000 + Math.random() * 900000
+      ).toString();
 
-        Change this URL according to your backend endpoint.
-      */
-
-      const response = await fetch(
-        "http://localhost:5000/send-otp",
+      // Send OTP using EmailJS
+      await emailjs.send(
+        "service_kw91dxr",
+        "template_l4ryo6b",
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-          }),
-        }
+          email: email,
+          passcode: newOtp,
+        },
+        "7fDrOnbG5Kxuie4Ye"
       );
 
-      const data = await response.json();
+      // Store OTP in App.jsx
+      setGeneratedOtp(newOtp);
 
-      if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to send OTP"
-        );
-      }
+      console.log("OTP sent successfully");
 
       // Move to OTP page
       onConfirm(email);
-
     } catch (err) {
-      setError(err.message || "Something went wrong");
+      console.error("EmailJS Error:", err);
+      setError("Failed to send OTP. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -77,7 +74,6 @@ export default function Check({ onBack, onConfirm }) {
           ←
         </button>
 
-
         {/* BRAND */}
         <div className="check-brand">
           <img
@@ -88,14 +84,11 @@ export default function Check({ onBack, onConfirm }) {
           <span>MediKiosk</span>
         </div>
 
-
         {/* TITLE */}
         <h1>Enter Your Email Address</h1>
 
-
         {/* EMAIL INPUT */}
         <div className="email-input-container">
-
           <input
             type="email"
             value={email}
@@ -110,20 +103,16 @@ export default function Check({ onBack, onConfirm }) {
               {error}
             </p>
           )}
-
         </div>
-
 
         {/* BUTTONS */}
         <div className="check-buttons">
-
           <button
             className="go-back-button"
             onClick={onBack}
           >
             Go Back
           </button>
-
 
           <button
             className="confirm-abha-button"
@@ -132,9 +121,7 @@ export default function Check({ onBack, onConfirm }) {
           >
             {loading ? "Sending..." : "Confirm"}
           </button>
-
         </div>
-
 
         {/* SOUND BUTTON */}
         <button

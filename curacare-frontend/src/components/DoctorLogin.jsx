@@ -1,3 +1,6 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+
 import { useState } from "react";
 import "./DoctorLogin.css";
 
@@ -7,14 +10,25 @@ export default function DoctorLogin({ onBack }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    console.log("Doctor Login:", {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
       email,
-      password,
-    });
-  };
+      password
+    );
+
+    console.log("Doctor logged in:", userCredential.user);
+
+    alert("Doctor Login Successful!");
+  } catch (error) {
+    console.error("Doctor Login Error:", error);
+
+    alert("Invalid email or password.");
+  }
+};
 
   return (
     <div className="doctor-login-page">
