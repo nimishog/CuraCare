@@ -1,0 +1,66 @@
+// schema.prisma
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [vector]
+}
+
+model Hospital {
+  id        String   @id @default(uuid())
+  name      String
+  address   String
+  city      String
+  createdAt DateTime @default(now())
+
+  // Many-to-Many: A hospital has many doctors
+  doctors   Doctor[] 
+  
+  // One-to-Many: A hospital stores many medical records
+  records   MedicalRecord[]
+}
+
+model Doctor {
+  id          String   @id @default(uuid())
+  firebaseUid String   @unique
+  name        String
+  specialty   String
+  
+  // Many-to-Many: A doctor works at many hospitals
+  hospitals   Hospital[] 
+  
+  // One-to-Many: A doctor creates many medical records
+  records     MedicalRecord[]
+}
+
+model Patient {
+  id          String   @id @default(uuid())
+  firebaseUid String   @unique
+  name        String
+  dateOfBirth DateTime
+  bloodType   String?
+  
+  // One-to-Many: A patient has many medical records 
+  // (This acts as the bridge connecting them to many doctors and many hospitals)
+  records     MedicalRecord[]
+}
+
+model MedicalRecord {
+  id           String   @id @default(uuid())
+  diagnosis    String
+  duration     Int
+  createdAt    DateTime @default(now())
+  // The Junction Links
+  patientId    String
+  patient      Patient  @relation(fields: [patientId], references: [id])
+
+  doctorId     String
+  doctor       Doctor   @relation(fields: [doctorId], references: [id])
+
+  hospitalId   String
+  hospital     Hospital @relation(fields: [hospitalId], references: [id])
+}
