@@ -1,43 +1,49 @@
-import os
+import io
 from groq import Groq
 from fastapi import UploadFile, HTTPException
 from app.core.config import settings
 
+
 class AudioService:
     def __init__(self):
-        # Initialize the Groq client using the API key from config
         self.client = Groq(api_key=settings.GROQ_API_KEY)
+        self.max_size_bytes = settings.MAX_AUDIO_SIZE_MB * 1024 * 1024
 
     async def transcribe_audio(self, file: UploadFile) -> str:
         """
         Sends patient audio from the kiosk to Groq for ultra-low latency speech-to-text transcription.
         """
         try:
-            # Read file contents into memory temporarily
-            audio_content = await file.read()
+            # Read file contents into memory
+            audio_bytes = await file.read()
             
-            # Save temporarily or pass file-like object depending on Groq SDK requirements
-            temp_file_path = f"temp_{file.filename}"
-            with open(temp_file_path, "wb") as f:
-                f.write(audio_content)
-
-            with open(temp_file_path, "rb") as audio_file:
-                # Call Groq's Whisper-equivalent transcription endpoint
-                completion = self.client.audio.transcriptions.create(
-                    file=(file.filename, audio_file.read()),
-                    model="whisper-large-v3", # Groq hosts high-speed whisper models
-                    response_format="json"
+            # Validate file size
+            if len(audio_bytes) > self.max_size_bytes:
+                raise HTTPException(
+                    status_code=413,
+                    detail=f"Audio file too large. Max size: {settings.MAX_AUDIO_SIZE_MB}MB"
                 )
             
-            # Clean up temporary file
-            if os.path.exists(temp_file_path):
-                os.remove(temp_file_path)
+            # Validate file format
+            if not file.filename or not file.filename.lower().endswith(('.mp3', '.wav', '.m4a', '.webm', '.ogg')):
+                raise HTTPException(status_code=400, detail="Invalid audio file format.")
+
+            # Pass bytes directly to Groq SDK using BytesIO - no temp files
+            audio_file = io.BytesIO(audio_bytes)
+            audio_file.name = file.filename  # Groq SDK uses filename for format detection
+
+            completion = self.client.audio.transcriptions.create(
+                file=(file.filename, audio_file),
+                model="whisper-large-v3",
+                response_format="json"
+            )
 
             return completion.text
 
+        except HTTPException:
+            raise
         except Exception as e:
-            if os.path.exists(temp_file_path):
-                os.remove(temp_file_path)
             raise HTTPException(status_code=500, detail=f"Groq Transcription Failed: {str(e)}")
+
 
 audio_service = AudioService()
